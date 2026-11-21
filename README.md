@@ -1,12 +1,12 @@
 # LendScope
 
-**Historical credit-risk analytics and machine learning | Python · PostgreSQL · dbt · scikit-learn · Streamlit**
+**Historical credit risk analytics and machine learning | Python · PostgreSQL · dbt · scikit-learn · Streamlit**
 
-LendScope is an end-to-end portfolio project built around historical LendingClub accepted-loan records. It combines chunked CSV ingestion, PostgreSQL data-quality checks, dbt reporting models, a six-page interactive dashboard, and an offline credit-risk modelling workflow with chronological evaluation.
+LendScope is an end to end portfolio project built around historical LendingClub accepted loan records. It combines chunked CSV ingestion, PostgreSQL data quality checks, dbt reporting models, a six page interactive dashboard, and an offline credit risk modelling workflow with chronological evaluation.
 
 **Key results:** 2,260,668 identifiable loan records profiled · 3 analytics marts · 51 Python tests and 8 dbt tests · 283,026 resolved 2015 loans in the final model evaluation.
 
-> **Research project, not a lending decision system.** The classifier predicts retrospective charge-off among a selected population of *resolved* 36-month loans. It is not a validated probability of default for newly originated loans or a point-in-time production backtest.
+> **Research project, not a lending decision system.** The classifier predicts retrospective charge off among a selected population of *resolved* 36 month loans. It is not a validated probability of default for newly originated loans or a point in time production backtest.
 
 ## Architecture
 
@@ -17,22 +17,22 @@ LendScope is an end-to-end portfolio project built around historical LendingClub
 The platform contains two related workflows:
 
 - **Portfolio analytics:** LendingClub CSV → Python schema validation and PostgreSQL `COPY` → `raw.loans` → dbt `staging.stg_loans` → three tables in `staging_analytics` → Streamlit dashboard.
-- **Credit-risk research:** curated loan cohorts → feature engineering and chronological training/validation → model comparison, feature ablation and Platt calibration → a frozen 2015 holdout evaluation → version-controlled summary reports consumed by the dashboard.
+- **Credit risk research:** curated loan cohorts → feature engineering and chronological training/validation → model comparison, feature ablation and Platt calibration → a frozen 2015 holdout evaluation → version controlled summary reports consumed by the dashboard.
 
-The dashboard queries the **three aggregate tables** for its five portfolio/data-quality pages and reads **saved JSON/CSV modelling reports** for its Risk Modelling page. It does not train models or score borrowers interactively.
+The dashboard queries the **three aggregate tables** for its five portfolio/data quality pages and reads **saved JSON/CSV modelling reports** for its Risk Modelling page. It does not train models or score borrowers interactively.
 
 ## What it demonstrates
 
 | Layer | Implementation |
 | --- | --- |
-| Ingestion | Validate a 151-column source schema, bulk-load via PostgreSQL `COPY` to a staging table, promote to `raw.loans`, track run status in `meta.ingestion_runs` |
-| Data quality | Verify source counts, loan-ID uniqueness, critical fields and column count |
+| Ingestion | Validate a 151 column source schema, bulk load via PostgreSQL `COPY` to a staging table, promote to `raw.loans`, track run status in `meta.ingestion_runs` |
+| Data quality | Verify source counts, loan ID uniqueness, critical fields and column count |
 | SQL modelling | dbt staging view plus purpose/year, vintage/grade and state marts; reconciliation and column tests |
-| Feature engineering | Numeric validation, categorical missing-value handling, credit-history months at origination, binary charge-off target |
-| Machine learning | Logistic-regression baseline, histogram gradient boosting, expanded features, permutation importance, 14-to-12-feature ablation and Platt calibration |
-| Evaluation | Chronological model development; 2015 final holdout, ROC-AUC, average precision, Brier score, risk deciles and calibration bias |
+| Feature engineering | Numeric validation, categorical missing value handling, credit history months at origination, binary charge off target |
+| Machine learning | Logistic regression baseline, histogram gradient boosting, expanded features, permutation importance, 14 to 12 feature ablation and Platt calibration |
+| Evaluation | Chronological model development; 2015 final holdout, ROC AUC, average precision, Brier score, risk deciles and calibration bias |
 | Presentation | Streamlit + Plotly; Overview, Credit grades, Geography, Loan purposes, Data quality and Risk Modelling |
-| Testing | 51 fast synthetic-data Python tests and 8 database-backed dbt tests |
+| Testing | 51 fast synthetic data Python tests and 8 database backed dbt tests |
 
 ### Dashboard
 
@@ -48,9 +48,9 @@ Add a real **Overview** screenshot before publication if available; the project 
 
 ## Data and modelling design
 
-The raw source used for this project is named `accepted_2007_to_2018Q4.csv`. In the source-specific quality checks it contains **2,260,701 rows**, including **2,260,668 records with numeric loan IDs** and 33 non-loan/metadata rows. The CSV itself is **not distributed** with this repository. The ingestion and quality scripts expect this particular 151-column export; a different release may require adaptation.
+The raw source used for this project is named `accepted_2007_to_2018Q4.csv`. In the source specific quality checks it contains **2,260,701 rows**, including **2,260,668 records with numeric loan IDs** and 33 non loan/metadata rows. The CSV itself is **not distributed** with this repository. The ingestion and quality scripts expect this particular 151-column export; a different release may require adaptation.
 
-The binary research cohort includes only loans with a **36-month term**, originated in **2011–2015**, and a resolved status of **`Fully Paid`** (0) or **`Charged Off`** (1).
+The binary research cohort includes only loans with a **36-month term**, originated in **2011–2015** and a resolved status of **`Fully Paid`** (0) or **`Charged Off`** (1).
 
 | Dataset | Origination years | Resolved loans | Charged off |
 | --- | --- | ---: | ---: |
@@ -70,18 +70,18 @@ Source: [`reports/modeling/final_test_evaluation.json`](reports/modeling/final_t
 | Reduced 12-feature gradient boosting | 0.6565 | 0.2364 | 0.12238 | 12.70% | −2.18 pp |
 | **Reduced + Platt calibration** | **0.6565** | **0.2364** | **0.12222** | **13.04%** | **−1.84 pp** |
 
-The observed charge-off rate was **14.89%**. The selected model's highest-risk decile had approximately **6.89×** the observed charge-off rate of its lowest-risk decile; the top decile captured **18.96%** of observed charge-offs. Platt calibration modestly improved Brier score without changing rank-based discrimination. **Underprediction remained** on the held-out year.
+The observed charge-off rate was **14.89%**. The selected model's highest risk decile had approximately **6.89×** the observed charge off rate of its lowest risk decile; the top decile captured **18.96%** of observed charge offs. Platt calibration modestly improved Brier score without changing rank based discrimination. **Underprediction remained** on the held out year.
 
 Further results and provenance are stored in [`reports/modeling/`](reports/modeling/), including validation comparisons, deciles, ablation, robustness checks and permutation importance. **Permutation importance is predictive, not causal**, and its shuffle standard deviation is not a confidence interval.
 
 ### Limitations
 
-- **Resolved-only selection/survivorship bias:** excluding unresolved loans changes the evaluated population; rates do not represent all originations or loan applicants.
-- **Not a point-in-time backtest:** historical outcome availability and feature availability at decision time are not fully demonstrated; temporal splitting alone does not exclude leakage.
+- **Resolved only selection/survivorship bias:** excluding unresolved loans changes the evaluated population; rates do not represent all originations or loan applicants.
+- **Not a point in time backtest:** historical outcome availability and feature availability at decision time are not fully demonstrated; temporal splitting alone does not exclude leakage.
 - **Moderate discrimination:** ROC-AUC ~0.6565 is useful for a demonstrative workflow, not evidence of production underwriting suitability.
-- **Calibration drift:** the selected model underpredicted 2015 charge-offs by ~1.84 percentage points despite 2014 calibration.
-- **No uncertainty or fairness claims:** this repository does not establish confidence intervals, statistical significance, model fairness, monitoring, regulatory compliance or real-world economic value.
-- **Data/version specificity:** hard-coded source-contract counts and SQL assumptions are tied to the particular historical LendingClub export used here.
+- **Calibration drift:** the selected model underpredicted 2015 charge offs by ~1.84 percentage points despite 2014 calibration.
+- **No uncertainty or fairness claims:** this repository does not establish confidence intervals, statistical significance, model fairness, monitoring, regulatory compliance or real world economic value.
+- **Data/version specificity:** hard coded source contract counts and SQL assumptions are tied to the particular historical LendingClub export used here.
 
 ## Getting started (Windows PowerShell)
 
@@ -102,9 +102,9 @@ The 51 Python tests use synthetic data, do not require Docker/PostgreSQL or the 
 
 ### B. Configure PostgreSQL for a fresh local environment
 
-**Before public release:** replace the tracked `docker-compose.yml` hardcoded development password with environment-variable substitution, and update `.env.example` consistently. Review the replacement examples in the separately supplied publication pack. **Do not blindly replace settings on an existing initialized PostgreSQL volume:** changing a container's `POSTGRES_PASSWORD` variable does not change an existing database user's password.
+**Before public release:** replace the tracked `docker-compose.yml` hardcoded development password with environment variable substitution, and update `.env.example` consistently. Review the replacement examples in the separately supplied publication pack. **Do not blindly replace settings on an existing initialized PostgreSQL volume:** changing a container's `POSTGRES_PASSWORD` variable does not change an existing database user's password.
 
-For a **fresh installation using the reviewed, environment-driven Compose configuration**:
+For a **fresh installation using the reviewed, environment driven Compose configuration**:
 
 ```powershell
 Copy-Item .env.example .env
@@ -130,7 +130,7 @@ The sample profile uses the `CREDIT_RISK_DB_PASSWORD` environment variable to av
 
 ### C. Load the historical source and build the analytics marts
 
-Only proceed when you have the **matching original CSV** in `data/raw/accepted_2007_to_2018Q4.csv` and a working database connection. Importing the full dataset uses significant time/disk space and replaces `raw.loans` through a validated staging-table promotion.
+Only proceed when you have the **matching original CSV** in `data/raw/accepted_2007_to_2018Q4.csv` and a working database connection. Importing the full dataset uses significant time/disk space and replaces `raw.loans` through a validated staging table promotion.
 
 ```powershell
 python .\src\ingestion\init_db.py
@@ -142,7 +142,7 @@ dbt test --project-dir .\dbt
 
 The dbt project builds **one staging view and three materialized marts** and provides **eight tests** (five column tests and three SQL reconciliation assertions). The dataset source contract is strict: if its columns or expected counts do not match, review the data rather than disabling the checks.
 
-### D. Run the six-page dashboard
+### D. Run the six page dashboard
 
 ```powershell
 python -m streamlit run .\dashboard\app.py --server.address 127.0.0.1
@@ -180,13 +180,13 @@ credit-risk-data-platform/
 ├── dbt/                # dbt staging view, marts and reconciliation tests
 ├── docs/               # Architecture and publication guidance (this pack)
 ├── reports/modeling/   # Committed aggregate model reports, not model binaries
-├── sql/                # Ad hoc modelling/data-audit SQL
+├── sql/                # Ad hoc modelling/data audit SQL
 ├── src/ingestion/      # Contracts, bulk load, metadata, connection setup
 ├── src/modeling/       # Feature engineering, training, validation, calibration
-├── src/quality/        # Source-level data checks
+├── src/quality/        # Source level data checks
 ├── tests/              # Synthetic pytest suite
 ├── docker-compose.yml # Local PostgreSQL 17 service (review password first)
-├── requirements.txt   # Pinned top-level Python packages
+├── requirements.txt   # Pinned top level Python packages
 └── TESTING.md          # Scope and limits of Python tests
 ```
 
@@ -194,6 +194,6 @@ credit-risk-data-platform/
 
 The committed repository omits the original CSV and `.joblib` files. Do not publish private `.env`, `.streamlit` secrets, personal dbt `profiles.yml`, database volumes, backup dashboards or generated datasets. The source ZIP used for this documentation contains a **hardcoded development password in `docker-compose.yml`**, so use the publication checklist and fix that configuration before making the repository public. A filename scan alone is not a full secret scan of every past commit.
 
-The dataset is historical third-party data. Confirm the original source attribution, licence and permitted redistribution before linking to or sharing it. For the methodology, see the saved validation/evaluation reports rather than assuming that all metrics apply to newly issued loans.
+The dataset is historical third party data. Confirm the original source attribution, licence and permitted redistribution before linking to or sharing it. For the methodology, see the saved validation/evaluation reports rather than assuming that all metrics apply to newly issued loans.
 
 **Status:** Built and evaluated as a local portfolio project; Risk Modelling screenshots are included, but an Overview screenshot, fresh-machine reproduction, public configuration hygiene and GitHub publication remain to be completed.
