@@ -1,0 +1,15 @@
+# EXAMPLE ONLY. Merge with ~/.dbt/profiles.yml; do not commit your private profile.
+# For PowerShell, set CREDIT_RISK_DB_PASSWORD from .env before running dbt:
+# $env:CREDIT_RISK_DB_PASSWORD = (python -c "from src.ingestion.database import get_engine; print(get_engine().url.password)").Trim()
+credit_risk_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5433
+      user: credit_user
+      password: "{{ env_var('CREDIT_RISK_DB_PASSWORD') }}"
+      dbname: credit_risk
+      schema: staging
+      threads: 4

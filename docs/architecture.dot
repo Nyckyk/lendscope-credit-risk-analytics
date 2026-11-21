@@ -1,0 +1,27 @@
+digraph LendScope {
+  graph [label="LendScope  |  Historical Credit Analytics & Risk Modelling", labelloc=t, fontsize=22, fontname="DejaVu Sans", fontcolor="#E6ECFF", bgcolor="#0D1424", pad="0.38", margin="0.12", ranksep="0.82", nodesep="0.45", splines=polyline, compound=true];
+  node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=11, fontcolor="#F3F5FF", color="#3B506F", penwidth=1.2, margin="0.19,0.14"];
+  edge [color="#94A8D8", arrowsize=0.7, penwidth=1.7];
+
+  raw_csv [label="Historical LendingClub CSV\n151 columns", fillcolor="#20324F"];
+  ingestion [label="Python schema contract\n+ PostgreSQL COPY", fillcolor="#253B5B"];
+  raw_db [label="PostgreSQL\nraw.loans", fillcolor="#1F4B60"];
+  ingest_log [label="meta.ingestion_runs", fillcolor="#1B4051", fontsize=10];
+  stg [label="dbt staging.stg_loans\nview", fillcolor="#324B69"];
+  marts [label="3 analytics marts\nstaging_analytics", fillcolor="#334E73"];
+  pages [label="5 analytics + quality\ndashboard pages", fillcolor="#423F76"];
+  features [label="Feature engineering\n2011–2015 resolved cohorts", fillcolor="#345361"];
+  train [label="Train 2011–13\nvalidate 2014", fillcolor="#4C4575"];
+  calibrate [label="12-feature model\nPlatt calibration", fillcolor="#554977"];
+  holdout [label="Frozen 2015 evaluation\n283,026 loans", fillcolor="#634B71"];
+  reports [label="Saved modelling reports\nJSON + CSV", fillcolor="#474A78"];
+  riskpage [label="Risk Modelling\ndashboard page", fillcolor="#423F76"];
+  ui [label="LendScope\n6-page Streamlit UI", fillcolor="#6355A0", penwidth=1.8];
+
+  raw_csv -> ingestion -> raw_db;
+  ingestion -> ingest_log [style=dashed, color="#6B83A8"];
+  raw_db -> stg -> marts -> pages -> ui;
+  raw_db -> features -> train -> calibrate -> holdout -> reports -> riskpage -> ui;
+  stg -> features [color="#729AB7", style=dashed];
+  {rank=same; pages; riskpage}
+}

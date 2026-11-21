@@ -1,0 +1,22 @@
+{
+  "model": "12-feature Histogram Gradient Boosting",
+  "calibration_method": "Platt scaling on log-odds",
+  "calibration_period": "January-June 2014",
+  "evaluation_period": "July-December 2014",
+  "calibration_loans": 71955,
+  "evaluation_loans": 90615,
+  "before": {
+    "roc_auc": 0.6563210609699287,
+    "average_precision": 0.22547832182307193,
+    "brier_score": 0.11697785223002148
+  },
+  "after": {
+    "roc_auc": 0.6563210609699287,
+    "average_precision": 0.22547832182307193,
+    "brier_score": 0.11690106883825971
+  },
+  "calibration_slope": 1.0035612215525236,
+  "calibration_intercept": 0.03782975546481919,
+  "independent_model_selection_test": false,
+  "test_set_evaluated": false
+}

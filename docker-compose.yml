@@ -1,0 +1,22 @@
+# REVIEW BEFORE APPLYING TO AN EXISTING POSTGRES VOLUME.
+# Password is read privately from the root .env file.
+services:
+  postgres:
+    image: postgres:17
+    container_name: credit-risk-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-credit_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your root .env file}
+      POSTGRES_DB: ${POSTGRES_DB:-credit_risk}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - credit_risk_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  credit_risk_postgres_data:

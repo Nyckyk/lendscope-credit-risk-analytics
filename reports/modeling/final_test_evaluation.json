@@ -1,0 +1,50 @@
+{
+  "evaluated_at_utc": "2026-11-02T01:56:03.397211+00:00",
+  "test_year": 2015,
+  "test_loans": 283026,
+  "charged_off_loans": 42132,
+  "outcome_definition": "Charged Off versus Fully Paid, resolved 36-month LendingClub loans",
+  "training_years": "2011-2013",
+  "model_selection_year": 2014,
+  "calibration_period": "January-June 2014",
+  "calibration_check": "July-December 2014",
+  "models": {
+    "Original 6-feature": {
+      "roc_auc": 0.6418581929678163,
+      "average_precision": 0.22295786641484444,
+      "brier_score": 0.12301879365123883,
+      "mean_predicted_pct": 13.301429384478672,
+      "observed_pct": 14.886264866125373,
+      "prediction_bias_pp": -1.5848354816467014,
+      "top_bottom_risk_ratio": 5.906349206349207,
+      "top_decile_capture_pct": 17.663533656128358
+    },
+    "Reduced 12-feature": {
+      "roc_auc": 0.6564741358948849,
+      "average_precision": 0.2364404407154418,
+      "brier_score": 0.12237850928409612,
+      "mean_predicted_pct": 12.703809951431044,
+      "observed_pct": 14.886264866125373,
+      "prediction_bias_pp": -2.182454914694329,
+      "top_bottom_risk_ratio": 6.893874029335635,
+      "top_decile_capture_pct": 18.96420772809266
+    },
+    "Reduced + Platt": {
+      "roc_auc": 0.6564741358948849,
+      "average_precision": 0.2364404407154418,
+      "brier_score": 0.12221647924480711,
+      "mean_predicted_pct": 13.043537081052984,
+      "observed_pct": 14.886264866125373,
+      "prediction_bias_pp": -1.84272778507239,
+      "top_bottom_risk_ratio": 6.893874029335635,
+      "top_decile_capture_pct": 18.96420772809266
+    }
+  },
+  "notes": [
+    "Models and calibrator were not refitted on test data.",
+    "Test cohort excludes loans with unresolved outcomes.",
+    "Retrospective historical-outcome evaluation.",
+    "Not a fully point-in-time lending backtest.",
+    "Not validated for production underwriting decisions."
+  ]
+}

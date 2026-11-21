@@ -1,0 +1,35 @@
+{
+  "training_years": "2011-2013",
+  "validation_year": 2014,
+  "training_loans": 157993,
+  "validation_loans": 162570,
+  "features": [
+    "loan_amount",
+    "annual_income",
+    "debt_to_income_ratio",
+    "fico_range_low",
+    "revol_util",
+    "inq_last_6mths",
+    "delinq_2yrs",
+    "pub_rec",
+    "open_acc",
+    "credit_history_months",
+    "loan_purpose",
+    "home_ownership",
+    "employment_length",
+    "verification_status"
+  ],
+  "feature_count": 14,
+  "sklearn_version": "1.9.1",
+  "existing_model": {
+    "roc_auc": 0.6438957632089939,
+    "average_precision": 0.20847364157906897,
+    "brier_score": 0.11489902277479541
+  },
+  "expanded_model": {
+    "roc_auc": 0.654914988913834,
+    "average_precision": 0.21937730685039683,
+    "brier_score": 0.11428709670589611
+  },
+  "test_set_evaluated": false
+}

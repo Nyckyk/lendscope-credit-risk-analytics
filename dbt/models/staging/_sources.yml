@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: lendingclub
+    description: Original LendingClub accepted loans dataset.
+    schema: raw
+    tables:
+      - name: loans
+        description: Source records loaded by the Python ingestion pipeline.

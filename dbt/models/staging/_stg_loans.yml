@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_loans
+    description: Cleaned LendingClub loan records.
+
+    columns:
+      - name: loan_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: loan_amount
+        data_tests:
+          - not_null
+
+      - name: issue_date
+        data_tests:
+          - not_null
+
+      - name: loan_status
+        data_tests:
+          - not_null

@@ -1,0 +1,25 @@
+{
+  "training_loans": 157993,
+  "validation_loans": 162570,
+  "training_chargeoff_share": 0.12519542005025538,
+  "validation_chargeoff_share": 0.13726394783785445,
+  "features": [
+    "loan_amount",
+    "annual_income",
+    "debt_to_income_ratio",
+    "fico_range_low",
+    "loan_purpose",
+    "home_ownership"
+  ],
+  "constant_baseline": {
+    "roc_auc": 0.5,
+    "average_precision": 0.13726394783785445,
+    "brier_score": 0.11856820582478127
+  },
+  "logistic_regression": {
+    "roc_auc": 0.6384470469279759,
+    "average_precision": 0.20515216473710332,
+    "brier_score": 0.11521890661504584
+  },
+  "test_set_evaluated": false
+}

@@ -1,0 +1,36 @@
+{
+  "generated_at_utc": "2026-11-14T17:52:27.513232+00:00",
+  "model": "Reduced 12-feature",
+  "evaluation_year": 2014,
+  "sample_size": 20000,
+  "sampling": "Stratified by target",
+  "random_state": 42,
+  "n_repeats": 3,
+  "scoring": "roc_auc",
+  "reference_auc": 0.6485450905442258,
+  "observed_rate": 0.13725,
+  "features": [
+    "loan_amount",
+    "annual_income",
+    "debt_to_income_ratio",
+    "fico_range_low",
+    "revol_util",
+    "inq_last_6mths",
+    "pub_rec",
+    "open_acc",
+    "credit_history_months",
+    "loan_purpose",
+    "home_ownership",
+    "employment_length"
+  ],
+  "sklearn_version": "1.9.1",
+  "model_sha256": "ddbb79c2c1d449a9981db1dca428ba167429f9c19c433a3f4491d5d46147d58c",
+  "validation_data_sha256": "c46fdad8831af0b92425a8860cf1f0afdc1253d78d0c6ac579a91dabd12c0ac5",
+  "report_sha256": "47b49ceffdf0c1203281e96945f70538c79b34a498e5ae51d3d2d9794bdc1ee4",
+  "notes": [
+    "Frozen reduced model; no refitting.",
+    "2015 holdout not accessed.",
+    "Standard deviation across shuffles is not a confidence interval.",
+    "Permutation importance is predictive, not causal; correlated features can share importance."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "model": "12-feature Gradient Boosting",
+  "training_years": "2011-2013",
+  "validation_year": 2014,
+  "thresholds_from_training": {
+    "income_p99": 225000.0,
+    "income_p995": 280000.0,
+    "revol_util_p99": 97.2
+  },
+  "groups": [
+    {
+      "group": "All validation loans",
+      "loans": 162570,
+      "charged_off": 22315,
+      "observed_rate": 0.13726394783785445,
+      "predicted_rate": 0.1297647675286204,
+      "brier_score": 0.11427788479645634,
+      "roc_auc": 0.6551245411304031,
+      "average_precision": 0.21953073757413277
+    },
+    {
+      "group": "Income above training P99",
+      "loans": 2220,
+      "charged_off": 189,
+      "observed_rate": 0.08513513513513514,
+      "predicted_rate": 0.0886882149414391,
+      "brier_score": 0.07576143438375536,
+      "roc_auc": 0.6590284453406068,
+      "average_precision": 0.157502735257661
+    },
+    {
+      "group": "Revolving utilisation above 100%",
+      "loans": 635,
+      "charged_off": 124,
+      "observed_rate": 0.1952755905511811,
+      "predicted_rate": 0.17093959146140197,
+      "brier_score": 0.1505262388576051,
+      "roc_auc": 0.652057950886939,
+      "average_precision": 0.3164351819550731
+    },
+    {
+      "group": "Neither extreme flagged",
+      "loans": 159734,
+      "charged_off": 22003,
+      "observed_rate": 0.13774775564375774,
+      "predicted_rate": 0.1301709777381288,
+      "brier_score": 0.11466122691080068,
+      "roc_auc": 0.6542100680705485,
+      "average_precision": 0.2193520510391547
+    }
+  ],
+  "test_set_evaluated": false
+}
