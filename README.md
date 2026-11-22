@@ -38,7 +38,7 @@ The dashboard queries the **three aggregate tables** for its five portfolio/data
 
 The six navigation pages are **Overview**, **Credit grades**, **Geography**, **Loan purposes**, **Data quality**, and **Risk Modelling**. The first five require a running database and populated marts. The sixth displays frozen modelling results, risk deciles, validation feature importance and methodology notes using the committed reports in `reports/modeling/`.
 
-The following are **actual LendScope screenshots supplied by the project author**, not generated mock-ups.
+The following are **actual LendScope screenshots supplied by the project author**, not generated mock ups.
 
 ![Risk Modelling summary, model comparisons and charts](docs/screenshots/risk-modelling-summary.png)
 
@@ -48,7 +48,7 @@ Add a real **Overview** screenshot before publication if available; the project 
 
 ## Data and modelling design
 
-The raw source used for this project is named `accepted_2007_to_2018Q4.csv`. In the source specific quality checks it contains **2,260,701 rows**, including **2,260,668 records with numeric loan IDs** and 33 non loan/metadata rows. The CSV itself is **not distributed** with this repository. The ingestion and quality scripts expect this particular 151-column export; a different release may require adaptation.
+The raw source used for this project is named `accepted_2007_to_2018Q4.csv`. In the source specific quality checks it contains **2,260,701 rows**, including **2,260,668 records with numeric loan IDs** and 33 non loan/metadata rows. The CSV itself is **not distributed** with this repository. The ingestion and quality scripts expect this particular 151 column export; a different release may require adaptation.
 
 The binary research cohort includes only loans with a **36-month term**, originated in **2011–2015** and a resolved status of **`Fully Paid`** (0) or **`Charged Off`** (1).
 
@@ -70,7 +70,7 @@ Source: [`reports/modeling/final_test_evaluation.json`](reports/modeling/final_t
 | Reduced 12-feature gradient boosting | 0.6565 | 0.2364 | 0.12238 | 12.70% | −2.18 pp |
 | **Reduced + Platt calibration** | **0.6565** | **0.2364** | **0.12222** | **13.04%** | **−1.84 pp** |
 
-The observed charge-off rate was **14.89%**. The selected model's highest risk decile had approximately **6.89×** the observed charge off rate of its lowest risk decile; the top decile captured **18.96%** of observed charge offs. Platt calibration modestly improved Brier score without changing rank based discrimination. **Underprediction remained** on the held out year.
+The observed charge off rate was **14.89%**. The selected model's highest risk decile had approximately **6.89×** the observed charge off rate of its lowest risk decile; the top decile captured **18.96%** of observed charge offs. Platt calibration modestly improved Brier score without changing rank based discrimination. **Underprediction remained** on the held out year.
 
 Further results and provenance are stored in [`reports/modeling/`](reports/modeling/), including validation comparisons, deciles, ablation, robustness checks and permutation importance. **Permutation importance is predictive, not causal**, and its shuffle standard deviation is not a confidence interval.
 
@@ -85,7 +85,7 @@ Further results and provenance are stored in [`reports/modeling/`](reports/model
 
 ## Getting started (Windows PowerShell)
 
-**Requirements:** Python 3.11, Docker Desktop with Docker Compose, sufficient disk space for the original dataset/PostgreSQL, and the source CSV if running ingestion or rebuilding the models. The Python dependencies were verified in the author's Windows environment; a **clean-room installation has not yet been demonstrated**.
+**Requirements:** Python 3.11, Docker Desktop with Docker Compose, sufficient disk space for the original dataset/PostgreSQL, and the source CSV if running ingestion or rebuilding the models. The Python dependencies were verified in the author's Windows environment; a **clean room installation has not yet been demonstrated**.
 
 ### A. Install Python dependencies and run unit tests (no loan data required)
 
@@ -98,7 +98,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-The 51 Python tests use synthetic data, do not require Docker/PostgreSQL or the raw CSV, and do not retrain or access the final holdout. `pytest.ini` sets a local `.pytest_tmp` base directory to avoid Windows temporary-folder permissions issues. Refer to [`TESTING.md`](TESTING.md) for test scope.
+The 51 Python tests use synthetic data, do not require Docker/PostgreSQL or the raw CSV, and do not retrain or access the final holdout. `pytest.ini` sets a local `.pytest_tmp` base directory to avoid Windows temporary folder permissions issues. Refer to [`TESTING.md`](TESTING.md) for test scope.
 
 ### B. Configure PostgreSQL for a fresh local environment
 
@@ -168,7 +168,7 @@ python -m src.modeling.build_expanded_test
 python -m src.modeling.evaluate_final_test
 ```
 
-Scripts such as `evaluate_validation.py`, `compare_risk_deciles.py` and `outlier_robustness.py` provide additional validation analyses. The final-holdout script writes `reports/modeling/final_test_evaluation.json` and `final_test_deciles.csv`; **do not repeat evaluation to tune hyperparameters or claim an additional independent holdout**.
+Scripts such as `evaluate_validation.py`, `compare_risk_deciles.py` and `outlier_robustness.py` provide additional validation analyses. The final holdout script writes `reports/modeling/final_test_evaluation.json` and `final_test_deciles.csv`; **do not repeat evaluation to tune hyperparameters or claim an additional independent holdout**.
 
 ## Repository layout
 
@@ -196,4 +196,4 @@ The committed repository omits the original CSV and `.joblib` files. Do not publ
 
 The dataset is historical third party data. Confirm the original source attribution, licence and permitted redistribution before linking to or sharing it. For the methodology, see the saved validation/evaluation reports rather than assuming that all metrics apply to newly issued loans.
 
-**Status:** Built and evaluated as a local portfolio project; Risk Modelling screenshots are included, but an Overview screenshot, fresh-machine reproduction, public configuration hygiene and GitHub publication remain to be completed.
+**Status:** Built and evaluated as a local portfolio project; Risk Modelling screenshots are included, but an Overview screenshot, fresh machine reproduction, public configuration hygiene and GitHub publication remain to be completed.
