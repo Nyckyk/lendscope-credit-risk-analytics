@@ -50,7 +50,7 @@ Add a real **Overview** screenshot before publication if available; the project 
 
 The raw source used for this project is named `accepted_2007_to_2018Q4.csv`. In the source specific quality checks it contains **2,260,701 rows**, including **2,260,668 records with numeric loan IDs** and 33 non loan/metadata rows. The CSV itself is **not distributed** with this repository. The ingestion and quality scripts expect this particular 151 column export; a different release may require adaptation.
 
-The binary research cohort includes only loans with a **36-month term**, originated in **2011–2015** and a resolved status of **`Fully Paid`** (0) or **`Charged Off`** (1).
+The binary research cohort includes only loans with a **36 month term**, originated in **2011–2015** and a resolved status of **`Fully Paid`** (0) or **`Charged Off`** (1).
 
 | Dataset | Origination years | Resolved loans | Charged off |
 | --- | --- | ---: | ---: |
